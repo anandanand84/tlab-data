@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Spark Lines Demo</title>
+	<title>Tlab Data Demo</title>
 	<meta name="description" content="${2}">
 	<!-- Mobile -->
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -16,9 +16,42 @@
 	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
 	<!-- Web Components -->
 	<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-	<link rel="import" href="spark-lines.html">
+	<script src="bower_components/bytebuffer/dist/ByteBufferAB.min.js"></script>
+	<script src="bower_components/protobuf/dist/ProtoBuf.min.js"></script>
+	<script src="bower_components/q/q.js"></script>
+	<script src="bower_components/tlab-data/app/build/DataService.js"></script>
+	<link rel="import" href="tlab-data.html">
 </head>
 <body unresolved>
-	<spark-lines></spark-lines>
+	<dom-module id="test-element">
+		<template>
+			<input type="text" placeholder="enter scrip name here" value="{{searchValue::input}}"/>
+			<label>{{searchValue}}</label>
+			<tlab-data id="testdata" method="getAvailableScrips" params="{{searchParams}}" last-response="{{choices}}" on-response="_scripsFound"> </tlab-data>
+			<template is="dom-repeat" items="{{choices}}">
+				<div>{{item.company}}</div>
+			</template>
+		</template>
+		<script>
+				Polymer({
+					is: "test-element",
+					properties:{
+						searchValue:{
+							observer:'_valueChanged'
+						}
+					},
+
+					_valueChanged:function(searchValue){
+						if(searchValue)
+							this.set('searchParams',[{'scrip':searchValue}])
+					},
+
+					_scripsFound:function(data){
+						console.log('response',data);
+					}
+				})
+		</script>
+	</dom-module>
+	<test-element></test-element>
 </body>
 </html>
