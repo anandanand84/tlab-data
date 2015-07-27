@@ -22,6 +22,6 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~1.0.7",
-    "tlab-data-service": "https://bitbucket.org/anand_aravindan/data-service.git#latest"
+    "data-service": "https://bitbucket.org/anand_aravindan/data-service.git#latest"
   }
 }
